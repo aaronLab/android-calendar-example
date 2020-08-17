@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupCalendar() {
-        // Example Days (Today ~ Today -8) Set Up
+        // Example Days (Today -1 ~ Today -9) Set Up
         val myDays = mutableListOf<LocalDate>()
         var i: Long = 1
         while (i < 10) {
