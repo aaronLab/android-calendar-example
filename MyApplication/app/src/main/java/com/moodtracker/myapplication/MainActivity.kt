@@ -15,6 +15,7 @@ import java.time.YearMonth
 import java.time.temporal.TemporalAmount
 import java.time.temporal.WeekFields
 import java.util.*
+import kotlin.collections.HashMap
 import kotlin.reflect.typeOf
 
 class MainActivity : AppCompatActivity() {
@@ -26,15 +27,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupCalendar() {
-        // Example Days (Today -1 ~ Today -9) Set Up
-        val myDays = mutableListOf<LocalDate>()
-        var i: Long = 1
-        while (i < 10) {
-            myDays.add(LocalDate.now().minusDays(i))
-            i ++
+        // [Example Events Type]
+        val events: HashMap<LocalDate, List<HashMap<String, String>>> = hashMapOf()
+        // [Put Dates for Example]
+        // Today, Emoji, Color
+        events[LocalDate.now()] = listOf(hashMapOf("emoji" to "💪"), hashMapOf("color" to "red"))
+        // Today -5, Emoji, Color
+        events[LocalDate.now().minusDays(5)] = listOf(hashMapOf("emoji" to "🤔"), hashMapOf("color" to "blue"))
+        // [Test Logs]
+        Log.e("events", "$events")
+        for (event in events) {
+            Log.e("event", "Date: ${event.key}")
+            Log.e("event", "Value Array ${event.value}")
+            Log.e("event", "Emoji Value ${event.value[0]["emoji"]}")
+            Log.e("event", "Color Value ${event.value[1]["color"]}")
         }
-
-        Log.e("myDays", "$myDays")
 
         // [a view holder for each date cell = entire calendar]
         calendarView.dayBinder = object : DayBinder<DayViewContainer> {
@@ -44,15 +51,29 @@ class MainActivity : AppCompatActivity() {
             // Called every time we need to reuse a container.
             override fun bind(container: DayViewContainer, day: CalendarDay) {
                 container.textView.text = day.date.dayOfMonth.toString()
-                if (day.date in myDays) {
-                    container.textView.setTextColor(Color.WHITE)
-                    container.view.setBackgroundColor(Color.RED)
-                } else {
-                    container.textView.setTextColor(Color.BLACK)
-                    container.view.setBackgroundColor(Color.TRANSPARENT)
+
+                for (event in events) {
+                    if (day.date == event.key) {
+                        if (event.value[0]["emoji"] != "") {
+                            container.subtitle.text = event.value[0]["emoji"]
+                        }
+                        if (event.value[1]["color"] == "red") {
+                            container.textView.setTextColor(Color.WHITE)
+                            container.textView.setBackgroundColor(Color.RED)
+                        } else {
+                            if (event.value[1]["color"] == "blue") {
+                                container.textView.setTextColor(Color.WHITE)
+                                container.textView.setBackgroundColor(Color.BLUE)
+                            } else {
+                                container.textView.setTextColor(Color.BLACK)
+                                container.view.setBackgroundColor(Color.TRANSPARENT)
+                            }
+                        }
+                    }
                 }
             }
         }
+
         // [Setup Calendar]
         val currentMonth = YearMonth.now()
         val firstMonth = YearMonth.of(1900, 1)

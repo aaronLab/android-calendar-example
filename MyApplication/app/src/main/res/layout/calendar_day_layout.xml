@@ -5,15 +5,6 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:visibility="invisible"
-        app:srcCompat="@drawable/circle_red"
-        tools:ignore="MissingConstraints" />
-
     <TextView
         android:id="@+id/calendarDayText"
         android:layout_width="match_parent"
@@ -23,5 +14,17 @@
         android:textSize="16sp"
         android:visibility="visible"
         tools:text="22" />
+
+    <TextView
+        android:id="@+id/calendarDaySubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="🤔" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
