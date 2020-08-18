@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity() {
             Log.e("event", "Color Value ${event.value[1]["color"]}")
         }
 
+
+
         // [a view holder for each date cell = entire calendar]
         calendarView.dayBinder = object : DayBinder<DayViewContainer> {
             // Called only when a new container is needed.
@@ -51,6 +53,10 @@ class MainActivity : AppCompatActivity() {
             // Called every time we need to reuse a container.
             override fun bind(container: DayViewContainer, day: CalendarDay) {
                 container.textView.text = day.date.dayOfMonth.toString()
+
+                container.view.setOnClickListener {
+                    Log.e("Clicked", "${day.date}")
+                }
 
                 for (event in events) {
                     if (day.date == event.key) {
@@ -81,6 +87,9 @@ class MainActivity : AppCompatActivity() {
         val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
         calendarView.setup(firstMonth, lastMonth, firstDayOfWeek)
         calendarView.scrollToMonth(currentMonth)
+//        calendarView.setOnClickListener {
+//            Log.e("Clicked", "$calendarView")
+//        }
 
     }
 }
