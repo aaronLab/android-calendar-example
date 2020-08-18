@@ -55,7 +55,18 @@ class MainActivity : AppCompatActivity() {
                 container.textView.text = day.date.dayOfMonth.toString()
 
                 container.view.setOnClickListener {
-                    Log.e("Clicked", "${day.date}")
+                    if (events[day.date] != null) {
+                        Log.e("Clicked",
+                            "${day.date}\n" +
+                                    "Selected Date is: ${day.date}\n" +
+                                    "Saved Emoji is: ${events[day.date]?.get(0)?.get("emoji")}\n" +
+                                    "Saved Color is: ${events[day.date]?.get(1)?.get("color")}\n"
+                        )
+                    } else {
+                        Log.e("Clicked", "${day.date}\n" +
+                                "Opps!\n${day.date} doesn't have any data!"
+                        )
+                    }
                 }
 
                 for (event in events) {
